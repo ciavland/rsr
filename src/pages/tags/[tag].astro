@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const rants = await getCollection('rants', ({ data }) => !data.draft);
+  const tags = new Set(rants.flatMap((rant) => rant.data.tags));
+
+  return Array.from(tags).map((tag) => {
+    const filtered = rants
+      .filter((rant) => rant.data.tags.includes(tag))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+    return { params: { tag }, props: { tag, rants: filtered } };
+  });
+}
+
+const { tag, rants } = Astro.props;
+---
+
+<BaseLayout title={`#${tag}`}>
+  <p class="intro">Alle Rants zum Thema <strong>#{tag}</strong>.</p>
+  <ul class="post-list">
+    {rants.map((rant) => (
+      <li class="post-card">
+        <h2><a href={`/rants/${rant.id}/`}>{rant.data.title}</a></h2>
+        <div class="post-meta">
+          <time datetime={rant.data.date.toISOString()}>
+            {rant.data.date.toLocaleDateString('de-CH', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+          <span class="wutlevel" title="Wutlevel">{'🌶️'.repeat(rant.data.wutlevel)}</span>
+        </div>
+        <p class="excerpt">{rant.data.excerpt}</p>
+      </li>
+    ))}
+  </ul>
+  <a class="back-link" href="/">← Zurück zu allen Rants</a>
+</BaseLayout>

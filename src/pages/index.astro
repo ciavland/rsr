@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const allRants = await getCollection('rants', ({ data }) => !data.draft);
+const rants = allRants.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout title="RSR">
+  <p class="intro">
+    15 Jahre Schweiz. Unzählige Gebührensäcke, Vereinsversammlungen und Blicke,
+    weil der Rasenmäher am falschen Wochentag lief. Hier ist das Ventil.
+  </p>
+
+  {rants.length === 0 && <p class="empty-state">Noch keine Rants. Die Ruhe vor dem Sturm.</p>}
+
+  <ul class="post-list">
+    {rants.map((rant) => (
+      <li class="post-card">
+        <h2><a href={`/rants/${rant.id}/`}>{rant.data.title}</a></h2>
+        <div class="post-meta">
+          <time datetime={rant.data.date.toISOString()}>
+            {rant.data.date.toLocaleDateString('de-CH', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+          <span class="wutlevel" title="Wutlevel">{'🌶️'.repeat(rant.data.wutlevel)}</span>
+        </div>
+        <p class="excerpt">{rant.data.excerpt}</p>
+        <div class="tag-list">
+          {rant.data.tags.map((tag) => (
+            <a class="tag" href={`/tags/${tag}/`}>#{tag}</a>
+          ))}
+        </div>
+      </li>
+    ))}
+  </ul>
+</BaseLayout>
