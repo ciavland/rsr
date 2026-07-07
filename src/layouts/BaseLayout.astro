@@ -8,6 +8,7 @@ interface Props {
 
 const { title, description = 'Random Swiss Rants – ein Ventil für 15 Jahre Schweizer Absurditäten.' } = Astro.props;
 const pageTitle = title === 'RSR' ? title : `${title} · RSR`;
+const base = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
@@ -15,10 +16,10 @@ const pageTitle = title === 'RSR' ? title : `${title} · RSR`;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <meta name="description" content={description} />
     <title>{pageTitle}</title>
-    <link rel="alternate" type="application/rss+xml" title="RSR – Random Swiss Rants" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="RSR – Random Swiss Rants" href={`${base}rss.xml`} />
     <script is:inline>
       const stored = localStorage.getItem('rsr-theme');
       if (stored) document.documentElement.setAttribute('data-theme', stored);
@@ -27,7 +28,7 @@ const pageTitle = title === 'RSR' ? title : `${title} · RSR`;
   <body>
     <header class="site-header">
       <div class="wrap">
-        <a class="brand" href="/" aria-label="RSR Startseite">
+        <a class="brand" href={base} aria-label="RSR Startseite">
           <span class="cross" aria-hidden="true"></span>
           <span>
             <h1>RSR</h1>
@@ -35,9 +36,9 @@ const pageTitle = title === 'RSR' ? title : `${title} · RSR`;
           </span>
         </a>
         <nav class="site-nav">
-          <a href="/">Rants</a>
-          <a href="/about/">Über mich</a>
-          <a href="/rss.xml">RSS</a>
+          <a href={base}>Rants</a>
+          <a href={`${base}about/`}>Über mich</a>
+          <a href={`${base}rss.xml`}>RSS</a>
           <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Darstellung umschalten">
             🌗
           </button>

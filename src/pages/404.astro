@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title="404">
@@ -8,5 +9,5 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     Diese Seite existiert nicht. Anders als die Gebühr für den offiziellen
     Robidog-Sack, die existiert garantiert.
   </p>
-  <a class="back-link" href="/">← Zurück zu allen Rants</a>
+  <a class="back-link" href={base}>← Zurück zu allen Rants</a>
 </BaseLayout>

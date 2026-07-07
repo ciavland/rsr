@@ -16,6 +16,7 @@ const formattedDate = date.toLocaleDateString('de-CH', {
   month: 'long',
   day: 'numeric',
 });
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={title} description={excerpt}>
@@ -28,13 +29,13 @@ const formattedDate = date.toLocaleDateString('de-CH', {
       <h1>{title}</h1>
       <div class="tag-list">
         {tags.map((tag) => (
-          <a class="tag" href={`/tags/${tag}/`}>#{tag}</a>
+          <a class="tag" href={`${base}tags/${tag}/`}>#{tag}</a>
         ))}
       </div>
     </header>
     <div class="post-content">
       <slot />
     </div>
-    <a class="back-link" href="/">← Zurück zu allen Rants</a>
+    <a class="back-link" href={base}>← Zurück zu allen Rants</a>
   </article>
 </BaseLayout>
