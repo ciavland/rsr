@@ -8,7 +8,7 @@ wutlevel: 3
 
 Nach zwölf Jahren im Land, mit C-Bewilligung, Steuererklärung ohne
 Mahnung und einem Vereinsengagement, das mich innerlich altern liess (siehe
-[meinen Rant über die Generalversammlung](/rants/vereinsversammlung/)),
+[meinen Rant über die Generalversammlung](../vereinsversammlung/)),
 entschied ich: Es ist Zeit für den Schweizer Pass.
 
 Was folgte, war ein Verfahren, das gleichermassen streng, herzlich und

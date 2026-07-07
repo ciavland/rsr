@@ -15,6 +15,7 @@ export async function getStaticPaths() {
 }
 
 const { tag, rants } = Astro.props;
+const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={`#${tag}`}>
@@ -22,7 +23,7 @@ const { tag, rants } = Astro.props;
   <ul class="post-list">
     {rants.map((rant) => (
       <li class="post-card">
-        <h2><a href={`/rants/${rant.id}/`}>{rant.data.title}</a></h2>
+        <h2><a href={`${base}rants/${rant.id}/`}>{rant.data.title}</a></h2>
         <div class="post-meta">
           <time datetime={rant.data.date.toISOString()}>
             {rant.data.date.toLocaleDateString('de-CH', { year: 'numeric', month: 'long', day: 'numeric' })}
@@ -33,5 +34,5 @@ const { tag, rants } = Astro.props;
       </li>
     ))}
   </ul>
-  <a class="back-link" href="/">← Zurück zu allen Rants</a>
+  <a class="back-link" href={base}>← Zurück zu allen Rants</a>
 </BaseLayout>
