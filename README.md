@@ -39,12 +39,14 @@ Live: **https://ciavland.github.io/rsr/**
    nicht).
 3. Die Datenbank-ID aus der URL kopieren:
    `https://www.notion.so/<workspace>/<DATABASE_ID>?v=...`
-4. Im GitHub-Repo unter **Settings → Secrets and variables → Actions**
-   zwei Secrets anlegen:
-   - `NOTION_TOKEN` — der API-Key aus Schritt 1
-   - `NOTION_DATABASE_ID` — die ID aus Schritt 3
+4. Im GitHub-Repo unter **Settings → Secrets and variables → Actions**:
+   - Tab **Secrets** → `NOTION_TOKEN` anlegen (der API-Key aus Schritt 1).
+     Muss ein Secret sein, keine Variable — Variables sind unverschlüsselt
+     und für jeden mit Repo-Lesezugriff sichtbar.
+   - Tab **Variables** → `NOTION_DATABASE_ID` anlegen (die ID aus Schritt 3).
+     Unkritisch, darf eine normale Variable sein.
 
-Ohne diese beiden Secrets schlägt der `fetch:notion`-Schritt im Workflow
+Ohne diese beiden Werte schlägt der `fetch:notion`-Schritt im Workflow
 fehl (mit einer klaren Fehlermeldung).
 
 ## Lokale Entwicklung
