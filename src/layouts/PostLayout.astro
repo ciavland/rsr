@@ -1,0 +1,40 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  date: Date;
+  excerpt: string;
+  tags: string[];
+  wutlevel: number;
+}
+
+const { title, date, excerpt, tags, wutlevel } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('de-CH', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={title} description={excerpt}>
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        <span class="wutlevel" title="Wutlevel">{'🌶️'.repeat(wutlevel)}</span>
+      </div>
+      <h1>{title}</h1>
+      <div class="tag-list">
+        {tags.map((tag) => (
+          <a class="tag" href={`/tags/${tag}/`}>#{tag}</a>
+        ))}
+      </div>
+    </header>
+    <div class="post-content">
+      <slot />
+    </div>
+    <a class="back-link" href="/">← Zurück zu allen Rants</a>
+  </article>
+</BaseLayout>

@@ -1,0 +1,71 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Random Swiss Rants – ein Ventil für 15 Jahre Schweizer Absurditäten.' } = Astro.props;
+const pageTitle = title === 'RSR' ? title : `${title} · RSR`;
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <title>{pageTitle}</title>
+    <link rel="alternate" type="application/rss+xml" title="RSR – Random Swiss Rants" href="/rss.xml" />
+    <script is:inline>
+      const stored = localStorage.getItem('rsr-theme');
+      if (stored) document.documentElement.setAttribute('data-theme', stored);
+    </script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/" aria-label="RSR Startseite">
+          <span class="cross" aria-hidden="true"></span>
+          <span>
+            <h1>RSR</h1>
+            <span class="tagline">Random Swiss Rants</span>
+          </span>
+        </a>
+        <nav class="site-nav">
+          <a href="/">Rants</a>
+          <a href="/about/">Über mich</a>
+          <a href="/rss.xml">RSS</a>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Darstellung umschalten">
+            🌗
+          </button>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <div class="wrap">
+        <slot />
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <span>&copy; {new Date().getFullYear()} RSR — Alle Rants ohne Gewähr, aber mit Herzblut.</span>
+        <span>Gebaut in der Schweiz. Widerwillig bewundert.</span>
+      </div>
+    </footer>
+    <script is:inline>
+      const btn = document.getElementById('theme-toggle');
+      btn?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const current = root.getAttribute('data-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const currentlyDark = current ? current === 'dark' : prefersDark;
+        const next = currentlyDark ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('rsr-theme', next);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+
+export async function getStaticPaths() {
+  const rants = await getCollection('rants', ({ data }) => !data.draft);
+  return rants.map((rant) => ({
+    params: { slug: rant.id },
+    props: { rant },
+  }));
+}
+
+const { rant } = Astro.props;
+const { Content } = await render(rant);
+---
+
+<PostLayout
+  title={rant.data.title}
+  date={rant.data.date}
+  excerpt={rant.data.excerpt}
+  tags={rant.data.tags}
+  wutlevel={rant.data.wutlevel}
+>
+  <Content />
+</PostLayout>
