@@ -4,3 +4,7 @@ dist/
 .env
 .DS_Store
 npm-debug.log*
+
+# Rants are fetched from Notion at build time (npm run fetch:notion)
+src/content/rants/*.md
+!src/content/rants/.gitkeep

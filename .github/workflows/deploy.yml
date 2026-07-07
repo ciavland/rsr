@@ -3,6 +3,9 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  schedule:
+    # Picks up new posts published in Notion even without a code push.
+    - cron: '0 * * * *'
   workflow_dispatch: {}
 
 permissions:
@@ -29,6 +32,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Fetch content from Notion
+        run: npm run fetch:notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ vars.NOTION_DATABASE_ID }}
 
       - name: Build
         run: npm run build
