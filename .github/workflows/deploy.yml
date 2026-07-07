@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, claude/swiss-rants-blog-1qte2s]
   workflow_dispatch: {}
 
 permissions:
